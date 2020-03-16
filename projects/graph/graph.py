@@ -45,17 +45,13 @@ class Graph:
         # create a set to store our visited vertices
         visited = set()
 
-        # while queue is not empty (len greater than 0)
-        while q.size() > 0:
-            # dequeue the first vertex
-            v = q.dequeue()
-            # if that vertex has not been visited
-            if v not in visited:
+        while q.size() > 0: # while queue is not empty (len greater than 0)
+            v = q.dequeue() # dequeue the first vertex
+            if v not in visited: # if that vertex has not been visited
                 # mark as visited and print for debugging
                 visited.add(v)
-                print(v) # for debugging
-                # iterate over the child vertices of the current vertex
-                for next_vertex in self.vertices[v]:
+                print(v)
+                for next_vertex in self.vertices[v]: # iterate over the child vertices of the current vertex
                     # enqueue the next vertex
                     q.enqueue(next_vertex)
         
