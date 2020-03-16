@@ -39,21 +39,19 @@ class Graph:
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        # create empty queue enqueue the starting vertex id
+        # create a queue
         q = Queue()
-        q.enqueue(starting_vertex)
         # create a set to store our visited vertices
         visited = set()
+        q.enqueue(starting_vertex) #put starting node in the queue
 
-        while q.size() > 0: # while queue is not empty (len greater than 0)
-            v = q.dequeue() # dequeue the first vertex
+        while q.size() > 0: # while queue is not empty
+            v = q.dequeue() # pop the first vertex out of the queue
             if v not in visited: # if that vertex has not been visited
-                # mark as visited and print for debugging
-                visited.add(v)
+                visited.add(v) # mark as visited 
                 print(v)
-                for next_vertex in self.vertices[v]: # iterate over the child vertices of the current vertex
-                    # enqueue the next vertex
-                    q.enqueue(next_vertex)
+                for next_vertex in self.vertices[v]: # get adjacent edges and add to list
+                    q.enqueue(next_vertex) # enqueue the next vertex
         
 
     def dft(self, starting_vertex):
@@ -61,23 +59,17 @@ class Graph:
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        s = Stack() # create empty stack push the starting vertex
-        s.push(starting_vertex)
+        s = Stack() # create a stack
         visited = set() # create a set to store our visited vertices
+        s.push(starting_vertex) #put starting node in the queue
 
-       # while stack is not empty (len greater than 0)
-        while s.size() > 0:
-            # pop the first vertex
-            v = s.pop()
-            # if that vertex has not been visited
-            if v not in visited:
-                # mark as visited and print for debugging
-                visited.add(v)
-                print(v) # for debugging
-                # iterate over the child vertices of the current vertex
-                for next_vertex in self.vertices[v]:
-                    # push the next vertex
-                    s.push(next_vertex)
+        while s.size() > 0: # while stack is not empty
+            v = s.pop() # remove the first vertex out of the stack
+            if v not in visited: #if that vertex has not been visited
+                visited.add(v) #mark as visited
+                print(v)
+                for next_vertex in self.vertices[v]: # iterate over the child vertices of the current vertex
+                    s.push(next_vertex) # push the next vertex
 
     def dft_recursive(self, starting_vertex, visited= None):
         """
