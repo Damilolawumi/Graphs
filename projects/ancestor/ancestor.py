@@ -39,9 +39,9 @@ class Graph:
 
 def bfs(graph, starting_vertex):
     earliest_an = None
-    #  creted with an empty queue
+    #  create queue
     q = Queue()
-    #  adding the starting_vertex tot eh queue
+    #  adding the starting_vertex the queue
     initital_path = [starting_vertex]
     # calling it q.enqueue
     q.enqueue(initital_path)
@@ -55,12 +55,18 @@ def bfs(graph, starting_vertex):
          path_length = len(path)
         # grabbing the last number from the path
          last_vert = path[-1]
+         
          if last_vert not in visited:
              visited.add(last_vert)
+             # loop over each neighbor in the graphs vertices at index of vert
              for v in graph.vertices[last_vert]:
+                # make a copy of the path
                 path_copy = path[:]
+                # append vertex to the coppied path
                 path_copy.append(v)
+                # then enqueue the copied path
                 q.enqueue(path_copy)
+
                 if len(path_copy) > path_length:
                     earliest_an = path_copy
     if earliest_an:
@@ -68,12 +74,14 @@ def bfs(graph, starting_vertex):
     return -1
 
 def earliest_ancestor(ancestors, starting_node):
+    # instantiate a new graph object
     graph = Graph()
-    for a in ancestors:
-        # Add all vertices to graph
-        graph.add_vertex(a[0])
-        graph.add_vertex(a[1])
-    for a in ancestors:
+    # loop over all pairs in ancestors
+    for pair in ancestors:
+        # add pair[0] and pair[1] to the graph
+        graph.add_vertex(pair[0])
+        graph.add_vertex(pair[1])
         # Create child to parent relationship 
-        graph.add_edge(a[1], a[0])
+        graph.add_edge(pair[1], pair[0])
+
     return bfs(graph, starting_node)      
