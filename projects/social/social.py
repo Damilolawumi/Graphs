@@ -59,25 +59,35 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
-        for i in range(num_users):
+        # iterate over 0 to num users...
+        for i in range(num_users): 
+             # add user using an f-string
             self.add_user(f"User: {i+1}")
 
         # Create friendships
+        # generate all possible friendship combinations
         possible_friendships = []        
+
         # Create a list with all possible friendship combinations
+        # avoid dups by making sure the first number is smaller than the second
+        # iterate over user id in users...
         for user_id in self.users:
+            # iterate over friend id in in a range from user id + 1 to last id + 1...
             for friend_id in range(user_id + 1, self.last_id + 1):
+                # append a user id and friend id tuple to the possible friendships
                 possible_friendships.append((user_id, friend_id))
 
-        # shuffle the list
+        # shuffle friendships random import
         random.shuffle(possible_friendships)
-        # print(possible_friendships)
+                
         # then grab the first N elements from the list
         # Number of times to call add_friendships
         total_friendships = avg_friendships * num_users // 2
         # print(f"Friendships to create: {total_friendships}\n")
         for i in range(total_friendships):
+            # set friendship to possible friendships at i
             friendship = possible_friendships[i]
+            # add friendship of frienship[0], friendship[1]
             self.add_friendship(friendship[0], friendship[1])     
 
     def get_all_social_paths(self, user_id):
@@ -105,17 +115,23 @@ class SocialGraph:
         while q.size() > 0:
             # Dequeue the first path
             path = q.dequeue()
-            # If the last friend in the path has not been visited...
+           # set a last friend to the last item in the path
             last_friend = path[-1]
+            # if last_friend is not in visited
             if last_friend not in visited:
                 # Mark it as visited
                 visited[last_friend] = path
                 # Then add all of it's neighbors to the back of the queue
                 neighbors = self.friendships[last_friend]
+                # loop over next vert in vertices at the index of vert
                 for neighbor in neighbors:
-                    copy = path.copy()
-                    copy.append(neighbor)
-                    q.enqueue(copy)
+                    # set a new path equal to a new list of the path (copy)
+                    path_copy = path[:] #copy path
+                    # append neighbor to new path
+                    path_copy.append(neighbor)
+                    # enqueue the new path
+                    q.enqueue(path_copy)
+        # return visited dictionary            
         return visited
 
 
